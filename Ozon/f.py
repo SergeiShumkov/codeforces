@@ -1,4 +1,47 @@
-import os, io, time
+import os, io
+from datetime import datetime, time
+ 
+input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
+ 
+def sec(a):
+    arr = []
+    for i in a:
+        try:
+            arr.append(datetime.strptime(i, '%H:%M:%S').time())
+        except:
+            return False
+    if arr[1] >= arr[0]:
+        return(arr)
+    else:
+        return False
+ 
+ 
+def main():
+    t = int(input().decode().rstrip("\r\n"))
+    for i in range(t):
+        n = int(input().decode().rstrip("\r\n"))
+               
+        ss = True
+        arr2 = []
+        for j in range(n):
+            arr2.append(sec(input().decode().rstrip("\r\n").split("-")))
+        
+        if False in arr2:
+            print("NO")
+        else:
+            if len(arr2) > 1:
+                
+                arr2 = sorted(arr2, key=lambda i: (i[1]))
+                for i in range(len(arr2)-1):                
+                    if arr2[i][1] >= arr2[i+1][0]:
+                        ss = False
+                        break
+            print(["NO", "YES"][ss])
+        
+main()
+
+
+"""import os, io, time
 
 input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
 
@@ -36,7 +79,7 @@ def main():
         
         print(["NO", "YES"][ss])
         
-main()
+main()"""
 
 
 
